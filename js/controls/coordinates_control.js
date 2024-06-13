@@ -2,22 +2,25 @@
 
 import {Position} from '../model/Position.js';
 
-export const CoordinatesControl = L.Control.extend({
+export var CoordinatesControl = L.Control.extend({
     options: {
         position: 'topleft'
     },
 
     onAdd: function (map) {
-        const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+
+        var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
         container.id = 'coordinates-container';
         container.style.height = 'auto';
         L.DomEvent.disableClickPropagation(container);
 
-        const coordinatesForm = L.DomUtil.create('form', 'leaflet-bar leaflet-control leaflet-control-custom form-inline', container);
-        const formGroup = L.DomUtil.create('div', 'form-group', coordinatesForm);
+        var coordinatesForm = L.DomUtil.create('form', 'leaflet-bar leaflet-control leaflet-control-custom form-inline', container);
+        
+        var formGroup = L.DomUtil.create('div', 'form-group', coordinatesForm);
+        
         this._xCoordInput = this._createInput("xCoord", "x", formGroup);
         this._yCoordInput = this._createInput("yCoord", "y", formGroup);
-        this._planeCoordInput = this._createInput("planeCoord", "plane", formGroup);
+        this._zCoordInput = this._createInput("zCoord", "z", formGroup);
 
         L.DomEvent.on(this._map, 'mousemove', this._setMousePositionCoordinates, this);
 
@@ -25,21 +28,22 @@ export const CoordinatesControl = L.Control.extend({
     },
 
     _createInput: function(id, title, container, keyupFunc) {
-        const coordInput = L.DomUtil.create('input', 'form-control coord', container);
+        var coordInput = L.DomUtil.create('input', 'form-control coord', container);
         coordInput.type = 'text';
         coordInput.id = id;
 
         L.DomEvent.disableClickPropagation(coordInput);
         L.DomEvent.on(coordInput, 'keyup', this._goToCoordinates, this);
+
         return coordInput;
     },
 
     _goToCoordinates: function() {
-        const x = this._xCoordInput.value;
-        const y = this._yCoordInput.value;
-        const plane = this._planeCoordInput.value;
+        var x = this._xCoordInput.value;
+        var y = this._yCoordInput.value;
+        var z = this._zCoordInput.value;
 
-        if (!$.isNumeric(x) || !$.isNumeric(y) || !$.isNumeric(plane)) {
+        if (!$.isNumeric(x) || !$.isNumeric(y) || !$.isNumeric(z)) {
             return;
         }
 
@@ -47,13 +51,18 @@ export const CoordinatesControl = L.Control.extend({
             this._map.removeLayer(this._searchMarker);
         }
 
-        this._searchMarker = new L.marker(new Position(x, y, plane).toCentreLatLng());
+        this._searchMarker = new L.marker(new Position(x, y, z).toCentreLatLng(this._map));
+	
 		this._searchMarker.once('click', (e) => this._map.removeLayer(this._searchMarker));
 		
         this._searchMarker.addTo(this._map);
 
         this._map.panTo(this._searchMarker.getLatLng());
-        this._map.setPlane(plane);
+		
+		if (this._map.plane != z) {
+			this._map.plane = z;
+			this._map.updateMapPath();
+		}
     },
 
     _setMousePositionCoordinates: function(e) {
@@ -61,9 +70,10 @@ export const CoordinatesControl = L.Control.extend({
 			return;
 		}
 		
-        const mousePos = Position.fromLatLng(e.latlng, this._map.getPlane());
+        var mousePos = Position.fromLatLng(this._map, e.latlng, this._map.plane);
+
         this._xCoordInput.value = mousePos.x;
         this._yCoordInput.value = mousePos.y;
-        this._planeCoordInput.value = mousePos.plane;
+        this._zCoordInput.value = mousePos.z;
     }
 });
