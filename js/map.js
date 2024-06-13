@@ -16,23 +16,7 @@ import { RegionLookupControl } from './controls/region_lookup_control.js';
 import { TitleLabel } from './controls/title_label.js';
 
 $(document).ready(function () {
-    
     const map = L.map.gameMap('map', {
-        maxBounds: [[-1000, -1000], [12800 + 1000, 12800 + 1000]],
-        maxBoundsViscosity: 0.5,
-        zoom: 2,
-        zoomControl: false,
-        // Min and max zoom
-        minZoom: -4,
-        maxZoom: 4,
-        doubleClickZoom: false,
-        // Fetch base maps and their border
-        showMapBorder: true,
-        baseMaps: 'https://raw.githubusercontent.com/mejrs/data_rs3/master/basemaps.json',
-    });
-
-    // Map squares layer
-    L.tileLayer.main('https://raw.githubusercontent.com/mejrs/layers_rs3/master/mapsquares/{mapId}/{zoom}/{plane}_{x}_{y}.png', {
         maxBounds: [
             [-1000, -1000],
             [12800 + 1000, 12800 + 1000],
@@ -58,13 +42,20 @@ $(document).ready(function () {
         loadMapData: true,
         showMapBorder: true,
         enableUrlLocation: true,
-    }).addTo(map);
+    });
+
+    // Map squares layer
+    L.tileLayer.main('https://raw.githubusercontent.com/mejrs/layers_rs3/master/mapsquares/{mapId}/{zoom}/{plane}_{x}_{y}.png', {
+        minZoom: -4,
+        maxNativeZoom: 3,
+        maxZoom: 5,
+    }).addTo(map).bringToBack();
 
     // Icons layer
     L.tileLayer.main('https://raw.githubusercontent.com/mejrs/layers_rs3/master/icon_squares/{mapId}/{zoom}/{plane}_{x}_{y}.png', {
         minZoom: -4,
         maxNativeZoom: 3,
-        maxZoom: 4,
+        maxZoom: 5,
     }).addTo(map);
 
     // Zone squares
