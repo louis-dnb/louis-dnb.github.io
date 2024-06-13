@@ -12,7 +12,7 @@
     </script>
     <meta charset="utf-8" />
 
-    <title>Explv's Map</title>
+    <title>Explv's + Mej's Map</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
@@ -73,6 +73,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"
         integrity="sha256-u74zWXS2T+G4E4NsM/R8gR8SaTJcq5a0TCks5m+AN9k=" crossorigin="anonymous"></script>
 
+    <!-- Load Mej's leaflet plugins   -->
+    <script type="module" src="js/mejrs/L.GameMap.js"></script>
+    <script type="module" src="js/mejrs/L.TileLayer.js"></script>
+
     <!-- Try to load main JS module -->
     <script type="module" src="js/map.js"></script>
 </head>
@@ -89,7 +93,7 @@
             <form class="form-horizontal">
                 <div class="form-group">
                     <label class="control-label col-lg-6" for="output-type">Output type</label>
-                    <div class="col-lg-5">
+                    <div class="col-lg-6">
                         <select class="form-control" id="output-type">
                             <option>Array</option>
                             <option>List</option>
@@ -100,7 +104,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label col-lg-6" for="bot-api">Bot type</label>
-                    <div class="col-lg-5">
+                    <div class="col-lg-6">
                         <select class="form-control" id="bot-api">
                             <option>OSBot</option>
                             <option>TRiBot</option>
@@ -112,12 +116,12 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-6" for="dax-spacing">Dax Path spacing</label>
-                    <div class="col-lg-5">
-                        <input id="dax-spacing" class="form-control" type="number" min="0" value="0">
-                    </div>
-                </div>
+<!--                <div class="form-group">-->
+<!--                    <label class="control-label col-lg-6" for="dax-spacing">Dax Path spacing</label>-->
+<!--                    <div class="col-lg-5">-->
+<!--                        <input id="dax-spacing" class="form-control" type="number" min="0" value="0">-->
+<!--                    </div>-->
+<!--                </div>-->
             </form>
         </div>
     </div>
