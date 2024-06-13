@@ -54,7 +54,7 @@ $(document).ready(function () {
         minZoom: -4,
         maxZoom: 4,
         doubleClickZoom: false,
-        baseMaps: "data_rs3/basemaps.json",
+        baseMaps: "https://raw.githubusercontent.com/mejrs/data_rs3/master/basemaps.json",
         loadMapData: true,
         showMapBorder: true,
         enableUrlLocation: true,
