@@ -16,6 +16,7 @@ import { RegionLookupControl } from './controls/region_lookup_control.js';
 import { TitleLabel } from './controls/title_label.js';
 
 $(document).ready(function () {
+    
     const map = L.map.gameMap('map', {
         maxBounds: [[-1000, -1000], [12800 + 1000, 12800 + 1000]],
         maxBoundsViscosity: 0.5,
@@ -32,9 +33,31 @@ $(document).ready(function () {
 
     // Map squares layer
     L.tileLayer.main('https://raw.githubusercontent.com/mejrs/layers_rs3/master/mapsquares/{mapId}/{zoom}/{plane}_{x}_{y}.png', {
+        maxBounds: [
+            [-1000, -1000],
+            [12800 + 1000, 12800 + 1000],
+        ],
+        maxBoundsViscosity: 0.5,
+
+        customZoomControl: true,
+        fullscreenControl: true,
+        planeControl: true,
+        positionControl: true,
+        messageBox: true,
+        rect: true,
+        initialMapId: -1,
+        plane: 0,
+        x: 3200,
+        y: 3200,
+        minPlane: 0,
+        maxPlane: 3,
         minZoom: -4,
-        maxNativeZoom: 3,
         maxZoom: 4,
+        doubleClickZoom: false,
+        baseMaps: "data_rs3/basemaps.json",
+        loadMapData: true,
+        showMapBorder: true,
+        enableUrlLocation: true,
     }).addTo(map);
 
     // Icons layer
