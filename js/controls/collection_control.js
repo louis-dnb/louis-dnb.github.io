@@ -35,6 +35,10 @@ import {RuneMatePolyAreaConverter} from '../bot_api_converters/runemate/runemate
 import {RuneLiteAreasConverter} from '../bot_api_converters/runelite/runelite_areas_converter.js';
 import {RuneLitePathConverter} from '../bot_api_converters/runelite/runelite_path_converter.js';
 
+import { BotWithUsAreasConverter } from '../bot_api_converters/botwithus/botwithus_areas_converter.js';
+import { BotWithUsPathConverter } from '../bot_api_converters/botwithus/botwithus_path_converter.js';
+import { BotWithUsPolyAreaConverter } from '../bot_api_converters/botwithus/botwithus_polyarea_converter.js';
+
 const converters = {
     "OSBot": {
         "areas_converter": new OSBotAreasConverter(),
@@ -70,6 +74,11 @@ const converters = {
         "areas_converter": new RuneLiteAreasConverter(),
         "path_converter": new RuneLitePathConverter(),
         "polyarea_converter": new RuneLitePathConverter()
+    },
+    "BotWithUs": {
+        "areas_converter": new BotWithUsAreasConverter(),
+        "path_converter": new BotWithUsPathConverter(),
+        "polyarea_converter": new BotWithUsPolyAreaConverter()
     }
 };
 
